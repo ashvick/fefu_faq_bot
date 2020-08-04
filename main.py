@@ -5,7 +5,8 @@ import pandas as pd
 import numpy as np
 import logging
 
-logging.basicConfig(filename="savior.log", level=logging.INFO, format='%(asctime)s  %(name)s  %(levelname)s: %(message)s')
+logging.basicConfig(filename="bot.log", level=logging.INFO, format='%(asctime)s  %(name)s  %(levelname)s: %(message)s')
+log = open('queries.log', 'a')
 
 model = SentenceTransformer('distiluse-base-multilingual-cased')
 
@@ -22,30 +23,34 @@ def get_answer(q):
 
     hello_score = 1 - spatial.distance.cdist(query_embedding, hello_embedding, "cosine")[0]
 
-    if hello_score > 0.5:
+    if hello_score > 0.7:
         return 'Привет! Чтобы узнать, с чем я могу вам помочь, введите команду /help'
     else:
         distances = spatial.distance.cdist(query_embedding, question_embeddings, "cosine")[0]
+
+        results = zip(range(len(distances)), distances)
+        results = sorted(results, key=lambda x: x[1])
+
+        log.write("\n======================\nQuery: " + query + "\nTop 3 most similar queries in corpus:\n")
+        print("\n======================\nQuery: " + query + "\nTop 3 most similar queries in corpus:")
+
+        number_top_matches = 3
+        for idx, distance in results[0:number_top_matches]:
+            output = questions[idx].strip() + "(Cosine Score: %.4f)" % (1 - distance)
+            log.write(output + '\n')
+            print(output)
+
+        log.flush()
+
         idx = np.argmin(distances)
         distance = distances[idx]
-        print("\n======================\n")
-        print("Query:", query)
-        print("\nThe most similar sentence in corpus:")
 
         cos_score = 1 - distance
-        print(answers[idx], "(Cosine Score: %.4f)" % (1 - distance))
-
-        if cos_score < 0.25:
+        if cos_score < 0.3:
             return 'Пожалуйста, переформулируйте вопрос'
         else:
             return answers[idx]
 
-    # print("\n\n======================\n\n")
-    # print("Query:", query)
-    # print("\nTop 5 most similar sentences in corpus:")
-
-    # for idx, distance in results[0:3]:
-    #     print(answers[idx].strip(), "(Cosine Score: %.4f)" % (1 - distance))
 
 bot = telebot.TeleBot('1142344496:AAHBr4X2IwVD2E1JMShyNLxr6d_IYZFQSso')
 
