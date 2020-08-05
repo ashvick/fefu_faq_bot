@@ -8,5 +8,6 @@ https://github.com/UKPLab/sentence-transformers
   pip install -r requirements.txt
 2. Запуск бота:
   python main.py
+3. В data.csv содержится список вопросов. Чтобы бот понимал другие вопросы, нужно изменить этот файл и перезапустить бота (шаг 2)
   
 
