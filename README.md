@@ -1,13 +1,32 @@
 ### Используемые инструменты:
-- Для взаимодействия с Telegram использовалась библиотека https://github.com/eternnoir/pyTelegramBotAPI (через Webhook)
+- Для взаимодействия с Telegram использовалась библиотека https://github.com/eternnoir/pyTelegramBotAPI 
 - Для сравнения запроса пользователя с вопросом из списка типа "Вопрос-Ответ" использовалась pre-trained модель "distiluse-base-multilingual-cased" из репозитория 
 https://github.com/UKPLab/sentence-transformers
 
-### Использование
-1. В терминале ввести:
-  pip install -r requirements.txt
-2. Запуск бота:
+### Установка
+1. Установить виртуальное окружение:
+```
+python -m venv env
+```
+Активировать виртуальное окружение:
+* Linux:
+```
+source ./env/bin/activate
+```
+* Windows:
+```
+.\env\Scripts\activate.bat
+```
+2. Затем в терминале:
+```
+pip3 install -r requirements.txt
+```
+3. Запуск бота:
+```
   python main.py
-3. В data.csv содержится список вопросов. Чтобы бот понимал другие вопросы, нужно изменить этот файл и перезапустить бота (шаг 2)
-  
+```
+
+### Использование
+
+В data.csv содержится список вопросов. Чтобы бот понимал другие вопросы, нужно изменить этот файл и перезапустить бота (шаг 3 из раздела "Установка")
 
