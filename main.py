@@ -8,7 +8,9 @@ import logging
 logging.basicConfig(filename="bot.log", level=logging.INFO, format='%(asctime)s  %(name)s  %(levelname)s: %(message)s')
 log = open('queries.log', 'a')
 
-model = SentenceTransformer('distiluse-base-multilingual-cased')
+# model = SentenceTransformer('distiluse-base-multilingual-cased')
+# model = SentenceTransformer('xlm-r-40langs-bert-base-nli-stsb-mean-tokens')
+model = SentenceTransformer('xlm-r-100langs-bert-base-nli-stsb-mean-tokens')
 
 data = pd.read_csv('data.csv')
 questions = data["questions"]
